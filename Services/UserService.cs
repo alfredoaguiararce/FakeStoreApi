@@ -60,7 +60,7 @@ namespace FakeStoreApi.Services
             FakeUser? user = users.FirstOrDefault(user => user.UserId == UserId);
             if (user is null) throw new NotImplementedException();
             user.UserName = NewUserName;
-            // TODO : Save method in the library
+            _FakeDb.UpdateUsers(users);
         }
         private List<FakeUser> GetAppGeneratedUsers()
         {
