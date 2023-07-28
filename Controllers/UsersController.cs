@@ -1,6 +1,6 @@
 ﻿using FakeStore.Database.Models;
 using FakeStoreApi.Models.Users;
-using FakeStoreApi.Services;
+using FakeStoreApi.Repository.FakeDb.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FakeStoreApi.Controllers
