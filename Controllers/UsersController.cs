@@ -21,20 +21,21 @@ namespace FakeStoreApi.Controllers
         {
             return _Users.GetUsers();
         }
-        [HttpGet("{UserId}")]
+        [HttpGet]
+        [Route("/user/{UserId}")]
         public FakeUser? Get(int UserId)
         {
             return _Users.GetUser(UserId);
         }
 
-        [HttpPost("create/user")]
+        [HttpPost]
         public IActionResult CreateUser([FromBody] CreateUserDto dto)
         {
             _Users.CreateUser(dto.Firstname, dto.Lastname, dto.Username, dto.Email, dto.Password);
             return Ok();
         }
 
-        [HttpPost("create/admin")]
+        [HttpPost("/admin")]
         public IActionResult CreateAdmin([FromBody] CreateUserDto dto)
         {
             _Users.CreateUserAdmin(dto.Firstname, dto.Lastname, dto.Username, dto.Email, dto.Password);

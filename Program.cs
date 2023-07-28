@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 builder.Services.UseFakeStoreDatabase(new FakeDatabaseConfigurator()
 {
     UsersConfiguration = new UsersConfigurator()
@@ -28,11 +29,15 @@ builder.Services.UseFakeStoreDatabase(new FakeDatabaseConfigurator()
         NullProbability = 0.2f
     }
 });
+
 // Define the databse to be used 
 builder.Services.AddDatabase(ENVIROMENT.FAKEDB);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Put all endpoints in lower case
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
 
