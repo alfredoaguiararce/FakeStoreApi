@@ -4,6 +4,7 @@ namespace FakeStoreApi.Repository.FakeDb.Abstractions
 {
     public abstract class CategoriesBase : ICategories
     {
+        public abstract void ArchiveCategory();
         public abstract void ChangeCategoryName(int CategoryId, string NewName);
         public abstract void CreateCategory(string Name, int UserCreatorId);
         public abstract List<FakeCategory> GetCategories();
@@ -16,5 +17,6 @@ namespace FakeStoreApi.Repository.FakeDb.Abstractions
         void CreateCategory(string Name, int UserCreatorId);
         FakeCategory? GetCategory(int CategoryId);
         List<FakeCategory> GetCategories();
+        void ArchiveCategory();
     }
 }
