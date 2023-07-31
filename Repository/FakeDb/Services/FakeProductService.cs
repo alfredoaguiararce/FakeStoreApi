@@ -9,6 +9,12 @@ namespace FakeStoreApi.Repository.FakeDb.Services
 
         private readonly IFakeStoreDatabase fakeDatabase;
         private static List<FakeProduct>? fakeProducts = null;
+
+        public FakeProductService(IFakeStoreDatabase fakeDatabase)
+        {
+            this.fakeDatabase = fakeDatabase;
+        }
+
         public override void EditProduct(int ProductId, string Category, string Name, string Description, float Price)
         {
             throw new NotImplementedException();
@@ -22,6 +28,27 @@ namespace FakeStoreApi.Repository.FakeDb.Services
         public override List<FakeProduct> GetProducts()
         {
             throw new NotImplementedException();
+        }
+
+        public override void CreateProduct(int ProductId, int UserCreatorId, string Category, string Name, string Description, float Price)
+        {
+            throw new NotImplementedException();
+        }
+
+        private int GetNextId()
+        {
+            List<FakeProduct> products = GetAppGeneratedProducts();
+            return products.Count() + 1;
+        }
+
+        private List<FakeProduct> GetAppGeneratedProducts()
+        {
+            if (fakeProducts is null)
+            {
+                fakeProducts = new List<FakeProduct>();
+                fakeProducts = fakeDatabase.GetProducts();
+            }
+            return fakeProducts;
         }
     }
 }
