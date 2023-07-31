@@ -10,35 +10,35 @@ namespace FakeStoreApi.Controllers
     [Route("[controller]")]
     public class CategoriesController: ControllerBase
     {
-        private readonly ICategories _Categories;
+        private readonly ICategories categories;
 
         public CategoriesController(ICategories categories)
         {
-            _Categories = categories;
+            this.categories = categories;
         }
 
         [HttpGet]
         public List<FakeCategory> Get()
         {
-            return _Categories.GetCategories();
+            return categories.GetCategories();
         }
         [HttpGet("{CategoryId}")]
         public FakeCategory? Get(int CategoryId)
         {
-            return _Categories.GetCategory(CategoryId);
+            return categories.GetCategory(CategoryId);
         }
 
         [HttpPost("create/user")]
         public IActionResult CreateUser([FromBody] CreateCategoryDto dto)
         {
-            _Categories.CreateCategory(dto.Name, dto.UserCreatorId);
+            categories.CreateCategory(dto.Name, dto.UserCreatorId);
             return Ok();
         }
 
         [HttpPut("update/name/category/{CategoryId}")]
         public IActionResult UpdateUsername(int CategoryId, [FromBody] UpdateCategoryNameDto dto)
         {
-            _Categories.ChangeCategoryName(CategoryId, dto.Name);
+            categories.ChangeCategoryName(CategoryId, dto.Name);
             return Ok();
         }
     }

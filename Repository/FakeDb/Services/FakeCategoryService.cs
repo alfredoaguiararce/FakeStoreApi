@@ -63,7 +63,7 @@ namespace FakeStoreApi.Repository.FakeDb.Services
             return fakeCategories;
         }
 
-        public override void ArchiveCategory()
+        public override void ArchiveCategory(int CategoryId)
         {
             List<FakeCategory> Categories = GetAppGeneratedCategories();
             FakeCategory? Category = Categories.FirstOrDefault(category => category.CategoryId == CategoryId);
