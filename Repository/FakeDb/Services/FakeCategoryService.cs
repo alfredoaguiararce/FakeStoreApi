@@ -27,6 +27,7 @@ namespace FakeStoreApi.Repository.FakeDb.Services
         {
             FakeCategory new_category = new FakeCategory()
             {
+                CategoryId = GetNextId(),
                 Name = Name,
                 CreatedAt = DateTime.UtcNow,
                 Archived = null,
@@ -60,6 +61,15 @@ namespace FakeStoreApi.Repository.FakeDb.Services
                 fakeCategories = fakeDatabase.GetCategories();
             }
             return fakeCategories;
+        }
+
+        public override void ArchiveCategory()
+        {
+            List<FakeCategory> Categories = GetAppGeneratedCategories();
+            FakeCategory? Category = Categories.FirstOrDefault(category => category.CategoryId == CategoryId);
+            if (Category is null) throw new NotImplementedException();
+            Category.Archived = DateTime.UtcNow;
+            fakeDatabase.UpdateCategories(Categories);
         }
     }
 }

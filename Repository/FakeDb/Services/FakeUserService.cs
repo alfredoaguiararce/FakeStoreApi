@@ -83,6 +83,15 @@ namespace FakeStoreApi.Repository.FakeDb.Services
             }
             return fakeUsers;
         }
+
+        public override void ArchiveUser(int UserId)
+        {
+            List<FakeUser> users = GetAppGeneratedUsers();
+            FakeUser? user = users.FirstOrDefault(user => user.UserId == UserId);
+            if (user is null) throw new NotImplementedException();
+            user.Archived = DateTime.UtcNow;
+            fakeDatabase.UpdateUsers(users);
+        }
     }
 
 }

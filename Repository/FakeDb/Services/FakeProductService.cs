@@ -1,4 +1,5 @@
-﻿using FakeStore.Database.Models;
+﻿using Bogus.DataSets;
+using FakeStore.Database.Models;
 using FakeStore.Database.Statics;
 using FakeStoreApi.Repository.FakeDb.Abstractions;
 
@@ -68,6 +69,15 @@ namespace FakeStoreApi.Repository.FakeDb.Services
                 fakeProducts = fakeDatabase.GetProducts();
             }
             return fakeProducts;
+        }
+
+        public override void ArchiveProduct(int ProductId)
+        {
+            List<FakeProduct> products = GetAppGeneratedProducts();
+            FakeProduct? product = products.FirstOrDefault(product => product.ProductId == ProductId);
+            if (product is null) throw new NotImplementedException();
+            product.Archived = DateTime.UtcNow;
+            fakeDatabase.UpdateProducts(products);
         }
     }
 }
