@@ -6,12 +6,12 @@ namespace FakeStoreApi.Repository.FakeDb.Services
 {
     public class FakeCategoryService : CategoriesBase
     {
-        private readonly IFakeStoreDatabase _FakeDb;
-        private static List<FakeCategory>? _FakeCategories = null;
+        private readonly IFakeStoreDatabase fakeDatabase;
+        private static List<FakeCategory>? fakeCategories = null;
 
         public FakeCategoryService(IFakeStoreDatabase fakeDb)
         {
-            _FakeDb = fakeDb;
+            fakeDatabase = fakeDb;
         }
 
         public override void ChangeCategoryName(int CategoryId, string NewName)
@@ -20,7 +20,7 @@ namespace FakeStoreApi.Repository.FakeDb.Services
             FakeCategory? Category = Categories.FirstOrDefault(category => category.CategoryId == CategoryId);
             if (Category is null) throw new NotImplementedException();
             Category.Name = NewName;
-            _FakeDb.UpdateCategories(Categories);
+            fakeDatabase.UpdateCategories(Categories);
         }
 
         public override void CreateCategory(string Name, int UserCreatorId)
@@ -54,12 +54,12 @@ namespace FakeStoreApi.Repository.FakeDb.Services
 
         private List<FakeCategory> GetAppGeneratedCategories()
         {
-            if (_FakeCategories is null)
+            if (fakeCategories is null)
             {
-                _FakeCategories = new List<FakeCategory>();
-                _FakeCategories = _FakeDb.GetCategories();
+                fakeCategories = new List<FakeCategory>();
+                fakeCategories = fakeDatabase.GetCategories();
             }
-            return _FakeCategories;
+            return fakeCategories;
         }
     }
 }
