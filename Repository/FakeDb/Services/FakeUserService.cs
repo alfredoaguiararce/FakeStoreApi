@@ -6,11 +6,11 @@ namespace FakeStoreApi.Repository.FakeDb.Services
 {
     public class FakeUserService : UsersBase
     {
-        private readonly IFakeStoreDatabase _FakeDb;
-        private static List<FakeUser>? _FakeUsers = null;
+        private readonly IFakeStoreDatabase fakeDatabase;
+        private static List<FakeUser>? fakeUsers = null;
         public FakeUserService(IFakeStoreDatabase fakeDb)
         {
-            _FakeDb = fakeDb;
+            fakeDatabase = fakeDb;
         }
 
 
@@ -20,7 +20,7 @@ namespace FakeStoreApi.Repository.FakeDb.Services
             FakeUser? user = users.FirstOrDefault(user => user.UserId == UserId);
             if (user is null) throw new NotImplementedException();
             user.UserName = NewUserName;
-            _FakeDb.UpdateUsers(users);
+            fakeDatabase.UpdateUsers(users);
         }
 
         public override void CreateUser(string FirstName, string LastName, string UserName, string Email, string Password)
@@ -76,12 +76,12 @@ namespace FakeStoreApi.Repository.FakeDb.Services
 
         private List<FakeUser> GetAppGeneratedUsers()
         {
-            if (_FakeUsers is null)
+            if (fakeUsers is null)
             {
-                _FakeUsers = new List<FakeUser>();
-                _FakeUsers = _FakeDb.GetUsers();
+                fakeUsers = new List<FakeUser>();
+                fakeUsers = fakeDatabase.GetUsers();
             }
-            return _FakeUsers;
+            return fakeUsers;
         }
     }
 
