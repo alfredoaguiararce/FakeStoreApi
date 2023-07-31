@@ -15,24 +15,43 @@ namespace FakeStoreApi.Repository.FakeDb.Services
             this.fakeDatabase = fakeDatabase;
         }
 
-        public override void EditProduct(int ProductId, string Category, string Name, string Description, float Price)
+        public override void EditProduct(int ProductId, int Category, string Name, string Description, float Price)
         {
-            throw new NotImplementedException();
+            List<FakeProduct> products = GetAppGeneratedProducts();
+            FakeProduct? product = products.FirstOrDefault(product => product.ProductId == ProductId);
+            if (product is null) throw new NotImplementedException();
+            product.CategoryId = Category;
+            product.Name = Name;
+            product.Description = Description;
+            product.Price = Price;
+            fakeDatabase.UpdateProducts(products);
         }
 
         public override FakeProduct? GetProduct(int ProductId)
         {
-            throw new NotImplementedException();
+            return GetAppGeneratedProducts().FirstOrDefault(p => p.ProductId == ProductId);
         }
 
         public override List<FakeProduct> GetProducts()
         {
-            throw new NotImplementedException();
+            return GetAppGeneratedProducts();
         }
 
-        public override void CreateProduct(int ProductId, int UserCreatorId, string Category, string Name, string Description, float Price)
+        public override void CreateProduct(int UserCreatorId, int Category, string Name, string Description, float Price)
         {
-            throw new NotImplementedException();
+            List<FakeProduct> products = GetAppGeneratedProducts();
+            products.Add(new FakeProduct()
+            {
+                ProductId = GetNextId(),
+                UserCreatorId = UserCreatorId,
+                CategoryId = Category, 
+                Name = Name, 
+                Description = Description, 
+                Price = Price,
+                CreatedAt = DateTime.UtcNow,
+                Archived = null
+            });
+            fakeDatabase.UpdateProducts(products);
         }
 
         private int GetNextId()

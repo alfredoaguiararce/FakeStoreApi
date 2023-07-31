@@ -11,6 +11,7 @@ namespace FakeStoreApi.Repository
             {
                 services.AddScoped<IUsers, FakeUserService>();
                 services.AddScoped<ICategories, FakeCategoryService>();
+                services.AddScoped<IProducts, FakeProductService>();
             }
 
             if(EnviromentType is ENVIROMENT.ENTITYFRAMEWORK)
